@@ -1,12 +1,12 @@
 {
   "name": "vetconnectserver",
   "version": "1.0.0",
-  "main": "app.js",
+  "main":"server.js",
   "author": "",
   "license": "ISC",
   "description": "",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "body-parser": "^1.20.3",
@@ -15,6 +15,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.14.2",
-    "mongoose": "^8.12.1"
+    "mongoose": "^8.12.1",
+    "validator": "^13.12.0"
   }
 }

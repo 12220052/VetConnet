@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
-module.exports = app;
+const userRouter = require("./routes/userRoutes");
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Middleware
+app.use(express.json());
+
+// Routes
+app.use("/api/v1/users", userRouter);
+
+module.exports = app; // ✅ Export only, no app.listen()
