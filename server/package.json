@@ -1,7 +1,7 @@
 {
   "name": "vetconnectserver",
   "version": "1.0.0",
-  "main":"server.js",
+  "main": "server.js",
   "author": "",
   "license": "ISC",
   "description": "",
@@ -9,11 +9,13 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
     "cloudinary": "^2.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.14.2",
     "mongoose": "^8.12.1",
     "validator": "^13.12.0"
