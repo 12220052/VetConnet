@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const bannerUpload = require("./routes/cloudinary")
 const authRoutes = require("./routes/authRoutes")
 const roleRoutes = require("./routes/roleRoutes")
+const vetRoutes = require('./routes/vetRoutes');
 
 
 // Middleware
@@ -29,6 +30,7 @@ mongoose.connect(process.env.mongo_URL, { useNewUrlParser: true, useUnifiedTopol
 app.use(bannerUpload);
 app.use(authRoutes);
 app.use(roleRoutes);
+app.use(vetRoutes);
 
 
 const port = process.env.PORT || 8080;
