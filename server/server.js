@@ -1,4 +1,4 @@
-const { cloudinary } = require('./utils/cloudinary');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -13,6 +13,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 const bannerUpload = require("./routes/cloudinary")
+const authRoutes = require("./routes/authRoutes")
+const roleRoutes = require("./routes/roleRoutes")
 
 
 // Middleware
@@ -25,6 +27,8 @@ mongoose.connect(process.env.mongo_URL, { useNewUrlParser: true, useUnifiedTopol
 
 // Routes
 app.use(bannerUpload);
+app.use(authRoutes);
+app.use(roleRoutes);
 
 
 const port = process.env.PORT || 8080;
