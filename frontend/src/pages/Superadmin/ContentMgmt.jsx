@@ -1,79 +1,115 @@
 import React, { useState } from "react";
+import { FaPlus, FaTable, FaEdit, FaTrash, FaSearch } from "react-icons/fa";
+import "../../astyles.css"; // Assuming this is your CSS file for styling
 
-const ContentManagement = () => {
-  const [diseaseOutbreaks, setDiseaseOutbreaks] = useState([]);
-  const [banners, setBanners] = useState([]);
-  const [faqs, setFaqs] = useState([]);
+const ExpertiseMngt = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [expertiseList, setExpertiseList] = useState([
+    { id: 1, cid: "10005006789", name: "Karma Dctj1", email: "karmadcjr@moul.gov.kt", contact: "17677890", expertise: "Veterinary Medicine" },
+    { id: 2, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
+    { id: 3, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
+  ]);
 
-  const addDiseaseOutbreak = () => {
-    setDiseaseOutbreaks([...diseaseOutbreaks, { image: "", description: "" }]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [editingExpertise, setEditingExpertise] = useState(null);
+  const [newExpertise, setNewExpertise] = useState({
+    cid: "", name: "", email: "", contact: "", expertise: "",
+  });
+
+  const openModal = (expertise = null) => {
+    setEditingExpertise(expertise);
+    setNewExpertise(expertise || { cid: "", name: "", email: "", contact: "", expertise: "" });
+    setModalVisible(true);
   };
 
-  const addBanner = () => {
-    setBanners([...banners, { image: "", title: "" }]);
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
-  const addFaq = () => {
-    setFaqs([...faqs, { question: "", answer: "" }]);
+  const handleSave = () => {
+    if (editingExpertise) {
+      setExpertiseList(expertiseList.map(item => (item.id === editingExpertise.id ? newExpertise : item)));
+    } else {
+      setExpertiseList([{ id: Date.now(), ...newExpertise }, ...expertiseList]);
+    }
+    closeModal();
+  };
+
+  const handleDelete = (id) => {
+    setExpertiseList(expertiseList.filter((item) => item.id !== id));
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Content Management</h1>
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">
+        <FaTable className="table-title-icon" /> Expertise Management
+      </h2>
 
-      {/* Disease Outbreak Section */}
-      <section className="mt-6">
-        <h2 className="text-xl font-semibold">Disease Outbreak</h2>
-        <button onClick={addDiseaseOutbreak} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
-          Add Disease Outbreak
-        </button>
-        {diseaseOutbreaks.map((item, index) => (
-          <div key={index} className="border p-4 mt-4 rounded-lg shadow">
-            <div className="relative mb-2">
-              <i className="fas fa-upload absolute left-2 top-3 text-gray-500"></i>
-              <input type="file" className="border p-2 w-full pl-8" />
-            </div>
-            <textarea className="border p-2 w-full mt-2" placeholder="Enter description..." />
-          </div>
-        ))}
-      </section>
+      <button className="add-expertise-btn" onClick={() => openModal()}>
+        <FaPlus /> Add Expertise
+      </button>
 
-      {/* Banner Section */}
-      <section className="mt-6">
-        <h2 className="text-xl font-semibold">Banner</h2>
-        <button onClick={addBanner} className="mt-2 px-4 py-2 bg-green-500 text-white rounded">
-          Add Banner
-        </button>
-        {banners.map((item, index) => (
-          <div key={index} className="border p-4 mt-4 rounded-lg shadow">
-            <div className="relative mb-2">
-              <i className="fas fa-upload absolute left-2 top-3 text-gray-500"></i>
-              <input type="file" className="border p-2 w-full pl-8" />
-            </div>
-            <input type="text" className="border p-2 w-full mt-2" placeholder="Enter banner title..." />
-          </div>
-        ))}
-      </section>
+      <div className="search-bar">
+        <FaSearch />
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-      {/* FAQ Section */}
-      <section className="mt-6">
-        <h2 className="text-xl font-semibold">Frequently Asked Questions</h2>
-        <button onClick={addFaq} className="mt-2 px-4 py-2 bg-purple-500 text-white rounded">
-          Add FAQ
-        </button>
-        {faqs.map((item, index) => (
-          <div key={index} className="border p-4 mt-4 rounded-lg shadow">
-            <input type="text" className="border p-2 w-full" placeholder="Enter question..." />
-            <textarea className="border p-2 w-full mt-2" placeholder="Enter answer..." />
-            <div className="mt-2 flex items-center">
-              <label className="mr-2">Active:</label>
-              <input type="checkbox" />
-            </div>
+      <div className="table-container">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>CID Number</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Expertise</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expertiseList.map((expertise) => (
+              <tr key={expertise.id}>
+                <td>{expertise.cid}</td>
+                <td>{expertise.name}</td>
+                <td>{expertise.email}</td>
+                <td>{expertise.contact}</td>
+                <td>{expertise.expertise}</td>
+                <td className="action-buttons">
+                  <button className="action-btn edit-btn" onClick={() => openModal(expertise)}>
+                    <FaEdit />
+                  </button>
+                  <button className="action-btn delete-btn" onClick={() => handleDelete(expertise.id)}>
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Modal Overlay */}
+      {modalVisible && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>{editingExpertise ? "Edit Expertise" : "Add Expertise"}</h3>
+            <input type="text" placeholder="CID Number" value={newExpertise.cid} onChange={(e) => setNewExpertise({ ...newExpertise, cid: e.target.value })} />
+            <input type="text" placeholder="Name" value={newExpertise.name} onChange={(e) => setNewExpertise({ ...newExpertise, name: e.target.value })} />
+            <input type="email" placeholder="Email" value={newExpertise.email} onChange={(e) => setNewExpertise({ ...newExpertise, email: e.target.value })} />
+            <input type="text" placeholder="Contact" value={newExpertise.contact} onChange={(e) => setNewExpertise({ ...newExpertise, contact: e.target.value })} />
+            <input type="text" placeholder="Expertise" value={newExpertise.expertise} onChange={(e) => setNewExpertise({ ...newExpertise, expertise: e.target.value })} />
+            <button className="update-btn" onClick={handleSave}>Save</button>
+            <button className="cancel-btn" onClick={closeModal}>Cancel</button>
           </div>
-        ))}
-      </section>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ContentManagement;
+export default ExpertiseMngt;

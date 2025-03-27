@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaTable, FaEdit, FaTrash } from "react-icons/fa";
 import "../../astyles.css"; // Import CSS file
-import "../../styles.css"
 
 const SuperAdminDashboard = () => {
   const [expertiseList, setExpertiseList] = useState([
