@@ -23,9 +23,9 @@ const Sidebar = () => {
 
       {/* Navigation Links */}
       <Link
-        to="/dashboard"
+        to="/edashboard"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
-          location.pathname === "/dashboard"
+          location.pathname === "/edashboard"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}

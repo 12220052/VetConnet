@@ -1,55 +1,135 @@
-// Dashboard.js
-import React from "react";
+import React, { useState } from "react";
+import { FaTable, FaEdit, FaTrash } from "react-icons/fa";
+import "../../astyles.css"; // Import CSS file
+import "../../styles.css"
 
 const SuperAdminDashboard = () => {
+  const [expertiseList, setExpertiseList] = useState([
+    { id: 1, cid: "10005006789", name: "Karma Dctj1", email: "karmadcjr@moul.gov.kt", contact: "17677890", expertise: "Veterinary Medicine" },
+    { id: 2, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
+    { id: 3, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
+    { id: 4, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
+    { id: 5, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
+    { id: 6, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
+    { id: 7, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
+  ]);
+
+  const [editExpertise, setEditExpertise] = useState(null);
+
+  const recentExpertise = expertiseList.slice(-6);
+
+  const handleDelete = (id) => {
+    setExpertiseList(expertiseList.filter((item) => item.id !== id));
+  };
+
+  const handleEdit = (expertise) => {
+    setEditExpertise(expertise);
+  };
+
+  const handleSave = () => {
+    setExpertiseList((prevList) =>
+      prevList.map((item) => (item.id === editExpertise.id ? editExpertise : item))
+    );
+    setEditExpertise(null);
+  };
+
   return (
-    <div className="flex-1 p-4">
-      <h1 className="text-2xl font-bold mb-4">Hi, Dechen</h1>
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">Hi, Super Admin</h1>
 
       {/* Stats Section */}
-      <div className="stats-grid grid grid-cols-3 gap-4 mb-6">
-        <div className="stat-card p-4 bg-white shadow rounded-lg">
-          <h2 className="text-lg font-semibold">Total Veterinarian</h2>
-          <p className="text-3xl">20</p>
+      <div className="stats-grid">
+        <div className="stats-card">
+          <h2 className="stats-title">Total Expertise</h2>
+          <p className="stats-number">{expertiseList.length}</p>
         </div>
-        <div className="stat-card p-4 bg-white shadow rounded-lg">
-          <h2 className="text-lg font-semibold">Total Application</h2>
-          <p className="text-3xl">40</p>
+        <div className="stats-card">
+          <h2 className="stats-title">Total Veterinarian</h2>
+          <p className="stats-number">40</p>
         </div>
-        <div className="stat-card p-4 bg-white shadow rounded-lg">
-          <h2 className="text-lg font-semibold">Total Report</h2>
-          <p className="text-3xl">8</p>
+        <div className="stats-card">
+          <h2 className="stats-title">Total Client</h2>
+          <p className="stats-number">8</p>
         </div>
       </div>
 
-      {/* Veterinarians Application Request Table */}
-      <div className="vet-application-request">
-        <h2 className="text-lg font-semibold mb-4">Veterinarians Application Request</h2>
-        <table className="w-full border-collapse border border-gray-300">
+      {/* Table Section */}
+      <div className="table-container">
+        <h2 className="table-title">
+          <FaTable className="table-title-icon" /> Recent Expertise
+        </h2>
+
+        <table className="table">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">CID Number</th>
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Email</th>
-              <th className="border p-2">Phone Number</th>
-              <th className="border p-2">Placement</th>
-              <th className="border p-2">Employee ID</th>
-              <th className="border p-2">File Attached</th>
+            <tr>
+              <th>CID Number</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Expertise</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="border p-2">10005006789</td>
-              <td className="border p-2">Karma Dctj1</td>
-              <td className="border p-2">karmadcjr@moul.gov.kt</td>
-              <td className="border p-2">17677890</td>
-              <td className="border p-2">National Veterinary Hospital</td>
-              <td className="border p-2">10000768</td>
-              <td className="border p-2 text-center">
-                <button className="bg-blue-500 text-white px-4 py-1 rounded">View</button>
-              </td>
-            </tr>
-            {/* Repeat rows as needed */}
+            {recentExpertise.length > 0 ? (
+              recentExpertise.map((expertise) => (
+                <tr key={expertise.id}>
+                  <td>
+                    {editExpertise?.id === expertise.id ? (
+                      <input type="text" value={editExpertise.cid} onChange={(e) => setEditExpertise({ ...editExpertise, cid: e.target.value })} className="table-input" />
+                    ) : (
+                      expertise.cid
+                    )}
+                  </td>
+                  <td>
+                    {editExpertise?.id === expertise.id ? (
+                      <input type="text" value={editExpertise.name} onChange={(e) => setEditExpertise({ ...editExpertise, name: e.target.value })} className="table-input" />
+                    ) : (
+                      expertise.name
+                    )}
+                  </td>
+                  <td>
+                    {editExpertise?.id === expertise.id ? (
+                      <input type="email" value={editExpertise.email} onChange={(e) => setEditExpertise({ ...editExpertise, email: e.target.value })} className="table-input" />
+                    ) : (
+                      expertise.email
+                    )}
+                  </td>
+                  <td>
+                    {editExpertise?.id === expertise.id ? (
+                      <input type="text" value={editExpertise.contact} onChange={(e) => setEditExpertise({ ...editExpertise, contact: e.target.value })} className="table-input" />
+                    ) : (
+                      expertise.contact
+                    )}
+                  </td>
+                  <td>
+                    {editExpertise?.id === expertise.id ? (
+                      <input type="text" value={editExpertise.expertise} onChange={(e) => setEditExpertise({ ...editExpertise, expertise: e.target.value })} className="table-input" />
+                    ) : (
+                      expertise.expertise
+                    )}
+                  </td>
+                  <td className="action-buttons">
+                    {editExpertise?.id === expertise.id ? (
+                      <button onClick={handleSave} className="action-btn save-btn">Save</button>
+                    ) : (
+                      <>
+                        <button onClick={() => handleEdit(expertise)} className="action-btn edit-btn">
+                          <FaEdit />
+                        </button>
+                        <button onClick={() => handleDelete(expertise.id)} className="action-btn delete-btn">
+                          <FaTrash />
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No expertise found</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

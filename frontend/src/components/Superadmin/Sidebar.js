@@ -23,9 +23,9 @@ const Sidebar = () => {
 
       {/* Navigation Links */}
       <Link
-        to="/dashboard"
+        to="/superdashboard"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
-          location.pathname === "/dashboard"
+          location.pathname === "/superdashboard"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
@@ -33,9 +33,9 @@ const Sidebar = () => {
         <FaHome className="mr-2" /> Dashboard
       </Link>
       <Link
-        to="/vet-application"
+        to="/expertiseMngt"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
-          location.pathname === "/vet-application"
+          location.pathname === "/expertiseMngt"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
@@ -43,7 +43,7 @@ const Sidebar = () => {
         <FaClipboardList className="mr-2" /> Expertise Management
       </Link>
       <Link
-        to="/vet-manage"
+        to="/expertiseMngt"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
           location.pathname === "/vet-manage"
             ? "bg-white text-[#011523]" // Active link styles
