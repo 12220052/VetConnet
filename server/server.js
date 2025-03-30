@@ -1,24 +1,38 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+var cors = require("cors");
+
+app.use(express.static("public"));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(cors());
+
+require("dotenv").config();
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config.env" });
-const app = require("./app");
 
-const DB = process.env.DATABASE.replace(
-  "<PASSWORD>",
-  process.env.DATABASE_PASSWORD
-);
+const bannerUpload = require("./routes/cloudinary");
+const authRoutes = require("./routes/authRoutes");
+const roleRoutes = require("./routes/roleRoutes");
 
-const local_DB = process.env.DATABASE_LOCAL;
+// Middleware
+app.use(bodyParser.json());
+
+// Database connection
 mongoose
-  .connect(local_DB)
-  .then((con) => {
-    // console.log(con.connections);
-    console.log("DB connection successful");
+  .connect(process.env.mongo_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch((error) => console.log(error));
+  .then(() => console.log("Connected to database"))
+  .catch((err) => console.error("Database connection error:", err));
 
-//  the server on port 8080
+// Routes
+app.use(bannerUpload);
+app.use(authRoutes);
+app.use(roleRoutes);
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`listening on 8080`);
 });

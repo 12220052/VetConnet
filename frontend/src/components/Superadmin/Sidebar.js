@@ -1,24 +1,24 @@
-// Sidebar.js
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   FaHome,
   FaClipboardList,
+  FaComments,
   FaUserCog,
-  FaChartLine,
+  FaMoneyBillWave,
+  FaFileInvoice,
   FaSignOutAlt,
-} from "react-icons/fa"; // Import icons
+} from "react-icons/fa"; // Import new icons
 import logo from "../../assets/logo.png"; // Import the logo
 
 const Sidebar = () => {
   const location = useLocation(); // Get the current route location
 
   return (
-    <div className="sidebar bg-[#011523] text-white w-64 h-full p-4 flex flex-col justify-center items-center pt-8">
+    <div className="sidebar  text-white w-64 h-full p-4 flex flex-col justify-center items-center pt-8">
       {/* Logo Section with Text */}
       <div className="sidebar-logo mb-8 flex flex-col items-center justify-center">
-        <img src={logo} alt="VetConnect Logo" className="w-32 mb-2" />
-        <p className="text-white text-lg font-semibold">VetConnect</p>
+        <img src={logo} alt="VetConnect Logo" className="logo w-20 mb-2" />
       </div>
 
       {/* Navigation Links */}
@@ -40,48 +40,48 @@ const Sidebar = () => {
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
       >
-        <FaClipboardList className="mr-2" /> Expertise Management
+        <FaUserCog className="mr-2" /> Expertise Management
       </Link>
       <Link
-        to="/expertiseMngt"
+        to="/contentmgnt"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
-          location.pathname === "/vet-manage"
+          location.pathname === "/contentmgnt"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
       >
-        <FaUserCog className="mr-2" /> Content Management
+        <FaClipboardList className="mr-2" /> Content Management
       </Link>
       <Link
-        to="/report"
+        to="/contenmgnt"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
           location.pathname === "/report"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
       >
-        <FaChartLine className="mr-2" /> Website Feedback
+        <FaComments className="mr-2" /> Website Feedback
       </Link>
 
       <Link
-        to="/report"
+        to="/payout"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
-          location.pathname === "/report"
+          location.pathname === "/payout"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
       >
-        <FaChartLine className="mr-2" /> Payout
+        <FaMoneyBillWave className="mr-2" /> Payout
       </Link>
       <Link
-        to="/report"
+        to="/refund-forms"
         className={`block py-2 px-3 rounded mb-2 flex items-center ${
-          location.pathname === "/report"
+          location.pathname === "/refund-forms"
             ? "bg-white text-[#011523]" // Active link styles
             : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
         }`}
       >
-        <FaChartLine className="mr-2" /> Refund Forms
+        <FaFileInvoice className="mr-2" /> Refund Forms
       </Link>
 
       {/* Logout Button at the Bottom */}

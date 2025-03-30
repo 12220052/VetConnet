@@ -4,13 +4,13 @@ import "../../astyles.css"; // Import CSS file
 
 const SuperAdminDashboard = () => {
   const [expertiseList, setExpertiseList] = useState([
-    { id: 1, cid: "10005006789", name: "Karma Dctj1", email: "karmadcjr@moul.gov.kt", contact: "17677890", expertise: "Veterinary Medicine" },
-    { id: 2, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
-    { id: 3, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
-    { id: 4, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
-    { id: 5, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
-    { id: 6, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891", expertise: "Animal Surgery" },
-    { id: 7, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892", expertise: "Pet Nutrition" },
+    { id: 1, cid: "10005006789", name: "Karma Dctj1", email: "karmadcjr@moul.gov.kt", contact: "17677890"},
+    { id: 2, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891"},
+    { id: 3, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892"},
+    { id: 4, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891"},
+    { id: 5, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892" },
+    { id: 6, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891"},
+    { id: 7, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892"},
   ]);
 
   const [editExpertise, setEditExpertise] = useState(null);
@@ -65,7 +65,6 @@ const SuperAdminDashboard = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Contact</th>
-              <th>Expertise</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -99,13 +98,6 @@ const SuperAdminDashboard = () => {
                       <input type="text" value={editExpertise.contact} onChange={(e) => setEditExpertise({ ...editExpertise, contact: e.target.value })} className="table-input" />
                     ) : (
                       expertise.contact
-                    )}
-                  </td>
-                  <td>
-                    {editExpertise?.id === expertise.id ? (
-                      <input type="text" value={editExpertise.expertise} onChange={(e) => setEditExpertise({ ...editExpertise, expertise: e.target.value })} className="table-input" />
-                    ) : (
-                      expertise.expertise
                     )}
                   </td>
                   <td className="action-buttons">

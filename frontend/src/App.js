@@ -12,9 +12,9 @@ import AdminHeader from "./components/Superadmin/Header"; // SuperAdmin Header
 import SuperAdminSidebar from "./components/Superadmin/Sidebar";
 import ExpertiseSidebar from "./components/Expertise/Sidebar";
 import SuperAdminDashboard from "./pages/Superadmin/SuperAdminDashboard";
+import ContentManagement from "./pages/Superadmin/ContentMgmt.jsx";
 import ExpertiseMngt from "./pages/Superadmin/ExpertiseMngt.jsx";
 import ExpertiseDashboard from "./pages/Expertise/ExpertiseDashboard";
-import ContentManagement from "./pages/Superadmin/ContentMgmt.jsx";
 import VetApplication from "./pages/Expertise/VetApplication";
 import VetManage from "./pages/Expertise/ManageVet";
 import Report from "./pages/Expertise/Report";
@@ -33,9 +33,10 @@ const MainLayout = () => {
 
   // 🔹 Check if the route belongs to SuperAdmin
   const isSuperAdminPage =
+    location.pathname === "/" ||
     location.pathname.startsWith("/superdashboard") ||
     location.pathname.startsWith("/expertiseMngt") ||
-    location.pathname.startsWith("/contentMgmt");
+    location.pathname.startsWith("/contentmgnt");
 
   // 🔹 Get the appropriate sidebar
   const getSidebar = () =>
@@ -56,7 +57,7 @@ const MainLayout = () => {
           <Routes>
             <Route path="/" element={<SuperAdminDashboard />} />
             <Route path="/superdashboard" element={<SuperAdminDashboard />} />
-            <Route path="/contentMgmt" element={<ContentManagement />} />
+            <Route path="/contentmgnt" element={<ContentManagement />} />
             <Route path="/edashboard" element={<ExpertiseDashboard />} />
             <Route path="/expertiseMngt" element={<ExpertiseMngt />} />
             <Route path="/vet-application" element={<VetApplication />} />
