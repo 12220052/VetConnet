@@ -39,8 +39,17 @@ exports.protect = async (req, res, next) => {
   }
 };
 
+// Modified restrictTo to work as proper middleware
 exports.restrictTo = (...roles) => {
-  return (req, res, next) => {
+  return async (req, res, next) => {
+    // Ensure user is populated
+    if (!req.user || !req.user.role_id) {
+      return res.status(403).json({
+        success: false,
+        message: 'User role not found'
+      });
+    }
+
     if (!roles.includes(req.user.role_id.role_type)) {
       return res.status(403).json({
         success: false,
