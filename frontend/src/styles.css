@@ -136,11 +136,11 @@ header {
   background-color: #f2f2f2;
 }
 
-/* Logout Button */
+/* Logout Button
 .logout {
-  border-top: 1px solid #ddd;
-  padding-bottom: 20px;
-}
+  /* border-top: 1px solid #ddd; */
+  /* padding-bottom: 40px;
+} */ */
 
 
 /* Content Container Styles */
