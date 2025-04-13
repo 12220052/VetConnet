@@ -14,6 +14,9 @@ const mongoose = require("mongoose");
 const bannerUpload = require("./routes/cloudinary");
 const authRoutes = require("./routes/authRoutes");
 const roleRoutes = require("./routes/roleRoutes");
+const contentRoutes = require("./routes/contentRoutes");
+const userActions = require("./routes/UserActions");
+const reviewRoutes = require("./routes/reviews");
 
 // Middleware
 app.use(bodyParser.json());
@@ -31,8 +34,11 @@ mongoose
 app.use(bannerUpload);
 app.use(authRoutes);
 app.use(roleRoutes);
+app.use(contentRoutes);
+app.use(userActions);
+app.use(reviewRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`listening on 8080`);
+  console.log("listening on 8080");
 });

@@ -5,7 +5,7 @@ const  cloudinary = require('../Utils/cloudinary');  // Import configured Cloudi
 router.get('/api/images', async (req, res) => {
     try {
         const { resources } = await cloudinary.search
-            .expression('folder:dev_setups')
+            .expression('folder:vetconnect')
             .sort_by('public_id', 'desc')
             .max_results(30)
             .execute();

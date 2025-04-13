@@ -6,21 +6,24 @@ const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
 const path = require("path");
-const User = require("../model/User");
-const Role = require("../model/Role");
+const User = require("../models/user");
+const Role = require("../models/Role");
+const authenticateUser = require("../middleware/authMiddleware");
 
 require("dotenv").config();
-// Multer Storage Configuration
+
+// Multer storage config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Store files in the "uploads" folder
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage: storage });
 
+// Nodemailer config
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
@@ -30,6 +33,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// ================= SIGNUP =====================
 router.post("/signup", async (req, res) => {
   const {
     name,
@@ -53,13 +57,13 @@ router.post("/signup", async (req, res) => {
   }
 
   if (role !== "expertise" && role !== "vet") {
-    if (!req.body.password || !req.body.confirmpassword) {
+    if (!password || !confirmpassword) {
       return res
         .status(422)
         .send({ error: "Password and confirm password are required" });
     }
 
-    if (req.body.password !== req.body.confirmpassword) {
+    if (password !== confirmpassword) {
       return res.status(422).send({ error: "Passwords do not match" });
     }
   }
@@ -77,7 +81,6 @@ router.post("/signup", async (req, res) => {
 
     let hashedPassword = null;
 
-    // For "expertise" role, generate a temp password
     if (role === "expertise") {
       const tempPassword = Math.random().toString(36).slice(-8);
       hashedPassword = await bcrypt.hash(tempPassword, 10);
@@ -88,25 +91,15 @@ router.post("/signup", async (req, res) => {
         subject: "Login Credentials",
         text: `Your login password is: ${tempPassword}`,
       });
-    }
-
-    // For "vet" role, set password to null (no password yet)
-    else if (role !== "vet") {
+    } else if (role !== "vet") {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    // let user = new User({
-    //     name,
-    //     email,
-    //     password: hashedPassword,  // Password is null for "vet"
-    //     role_id: roleData._id,
-    //     is_approved: role === "vet" ? false : true
-    // });
-    //  Convert certifications to an array of strings
     const formattedCertifications = Array.isArray(certifications)
       ? certifications.map((cert) => String(cert))
       : [];
-    let user = new User({
+
+    const user = new User({
       name,
       email,
       password: hashedPassword,
@@ -120,8 +113,6 @@ router.post("/signup", async (req, res) => {
       certifications: formattedCertifications,
       gender: gender || null,
     });
-
-    // Additional role-specific processing
     if (role === "client") {
       const otp = Math.floor(100000 + Math.random() * 900000);
       user.otp = otp;
@@ -145,25 +136,85 @@ router.post("/signup", async (req, res) => {
     await user.save();
     res.send({ message: "Registration successful" });
   } catch (err) {
-    console.log("db.err", err);
-    return res.status(500).send({ error: err.message });
+    console.error("Signup Error:", err);
+    res.status(500).send({ error: err.message });
   }
 });
 
-router.get("/vets", async (req, res) => {
+// ============ GET EXPERTISE (Admin only) ===========
+router.get(
+  "/getExpertise",
+  authenticateUser.authenticateUser,
+  async (req, res) => {
+    try {
+      if (!req.user || req.user.role_id.role_type !== "superAdmin") {
+        return res
+          .status(403)
+          .send({ error: "Access denied. Super Admin only." });
+      }
+
+      const roleExpertise = await Role.findOne({ role_type: "expertise" });
+      if (!roleExpertise)
+        return res.status(404).send({ error: "Expertise role not found" });
+
+      const experts = await User.find({ role_id: roleExpertise._id });
+      res.send(experts);
+    } catch (error) {
+      console.error("Error fetching expertise:", error);
+      res.status(500).send({ error: "Internal server error" });
+    }
+  }
+);
+
+// ============ UPDATE EXPERTISE ===========
+router.put("/expertise/:id", async (req, res) => {
   try {
+    const { CID, name, email, contact_no } = req.body;
+    const expertise = await User.findByIdAndUpdate(
+      req.params.id,
+      { CID, name, email, contact_no },
+      { new: true, runValidators: true }
+    );
+
+    if (!expertise) {
+      return res.status(404).json({ error: "Expertise not found" });
+    }
+    res.json({ message: "Expertise updated successfully", expertise });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// ============ GET VETS ===========
+router.get("/vets", authenticateUser.authenticateUser, async (req, res) => {
+  try {
+    if (
+      !req.user ||
+      !["expertise", "superAdmin"].includes(req.user.role_id.role_type)
+    ) {
+      return res.status(403).send({ error: "Access denied." });
+    }
+
     const roleVet = await Role.findOne({ role_type: "vet" });
     if (!roleVet) return res.status(404).send({ error: "Vet role not found" });
 
-    const vets = await User.find({ role_id: roleVet._id });
+    const approvedVets = await User.find({
+      role_id: roleVet._id,
+      is_approved: true,
+    });
+    const pendingVets = await User.find({
+      role_id: roleVet._id,
+      is_approved: false,
+    });
 
-    res.send(vets);
+    res.send({ approved: approvedVets, pending: pendingVets });
   } catch (error) {
     console.error("Error fetching vets:", error);
     res.status(500).send({ error: "Internal server error" });
   }
 });
 
+// ============ APPROVE/REJECT VET ===========
 router.post("/approve-vet", async (req, res) => {
   const { email, isApproved, rejectionReason } = req.body;
 
@@ -177,7 +228,6 @@ router.post("/approve-vet", async (req, res) => {
     if (!user) return res.status(404).send({ error: "Vet not found" });
 
     if (isApproved) {
-      // Generate and hash temporary password
       const tempPassword = Math.random().toString(36).slice(-8);
       const hashedPassword = await bcrypt.hash(tempPassword, 10);
 
@@ -185,31 +235,25 @@ router.post("/approve-vet", async (req, res) => {
       user.is_approved = true;
       await user.save();
 
-      // Send approval email with login credentials
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
         subject: "Vet Registration Approved",
-        text: `Your vet registration has been approved.\n\nYour temporary login password is: ${tempPassword}`,
+        text: `Your vet registration has been approved.\nYour temporary login password is: ${tempPassword}`,
       });
 
-      return res.send({
-        message: "Vet approved successfully and login credentials sent.",
-      });
+      return res.send({ message: "Vet approved and credentials sent." });
     } else {
-      // Send rejection email
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
         subject: "Vet Registration Rejected",
-        text: `Your vet registration has been rejected.\n\nReason: ${
-          rejectionReason || "No specific reason provided."
+        text: `Your vet registration was rejected.\nReason: ${
+          rejectionReason || "No reason provided."
         }`,
       });
 
-      // Optionally, delete the rejected vet account
       await User.deleteOne({ email });
-
       return res.send({
         message: "Vet registration rejected and user removed.",
       });
@@ -219,39 +263,100 @@ router.post("/approve-vet", async (req, res) => {
     res.status(500).send({ error: "Internal server error" });
   }
 });
-router.post("/verify-otp", (req, res) => {
+
+// ============ VERIFY OTP ===========
+router.post("/verify-otp", async (req, res) => {
   const { email, otp } = req.body;
 
   if (!email || !otp) {
-    return res.status(422).send({ error: "Please fill all the fields" });
+    return res.status(400).json({ error: "Email and OTP are required" });
   }
 
-  User.findOne({ email: email, otp: otp, otpExpiry: { $gt: Date.now() } })
-    .then((user) => {
-      if (!user) {
-        return res.status(422).send({ error: "Invalid OTP or OTP expired" });
-      }
+  try {
+    const user = await User.findOne({ email });
 
-      user.isVerified = true;
-      user.otp = undefined;
-      user.otpExpiry = undefined;
+    if (!user || user.otp !== parseInt(otp) || user.otpExpiry < Date.now()) {
+      return res.status(400).json({ error: "Invalid or expired OTP" });
+    }
 
-      user
-        .save()
-        .then(() => {
-          res.send({ message: "Email verified successfully" });
-        })
-        .catch((err) => {
-          console.log("db.err", err);
-          return res.status(422).send({ error: err.message });
-        });
-    })
-    .catch((err) => {
-      console.log("db.err", err);
-      return res.status(422).send({ error: err.message });
-    });
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save();
+
+    res.status(200).json({ message: "OTP verified successfully" });
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
+// ============ DELETE EXPERTISE ===========
+router.delete("/deleteExpertise/:id", async (req, res) => {
+  try {
+    const result = await User.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ error: "Expertise not found" });
+
+    res.status(200).json({ message: "Expertise deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting expertise:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// ============ DELETE VET ===========
+router.delete("/deleteVets/:id", async (req, res) => {
+  try {
+    const result = await User.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ error: "Vet not found" });
+
+    res.status(200).json({ message: "Vet deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting vet:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// ============ USER COUNT PER ROLE ===========
+router.get("/roles/user-count", async (req, res) => {
+  try {
+    const userCountByRole = await User.aggregate([
+      {
+        $group: {
+          _id: "$role_id",
+          userCount: { $sum: 1 },
+        },
+      },
+      {
+        $lookup: {
+          from: "roles",
+          localField: "_id",
+          foreignField: "_id",
+          as: "roleDetails",
+        },
+      },
+      { $unwind: { path: "$roleDetails", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 0,
+          role_id: "$_id",
+          role_type: "$roleDetails.role_type",
+          userCount: 1,
+        },
+      },
+    ]);
+
+    if (userCountByRole.length === 0) {
+      return res.json({
+        message: "No users found or roles not assigned properly.",
+        data: [],
+      });
+    }
+
+    res.json(userCountByRole);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -320,35 +425,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     if (!email || !password) {
-//         return res.status(422).send({ error: "credentials required " });
-
-//     }
-//     const savedUser = await User.findOne({ email: email })
-//     if (!savedUser) {
-//         return res.status(422).json({ error: "Invalid Credentials" })
-//     }
-//     try {
-//         bcrypt.compare(password, savedUser.password, (err, result) => {
-//             if (result) {
-//                 console.log("password match")
-//                 const token = jwt.sign({ _id: savedUser._id }, process.env.jwt_secret);
-//                 res.send({ token })
-//             }
-//             else {
-//                 console.log('password doesnot match')
-//                 return res.status(422).json({ error: "Invalid Credentials" })
-//             }
-
-//         })
-//     }
-//     catch (err) {
-//         console.log(err)
-//     }
-
-// })
 
 module.exports = router;
