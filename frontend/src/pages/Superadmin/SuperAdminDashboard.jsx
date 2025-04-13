@@ -11,6 +11,8 @@ const SuperAdminDashboard = () => {
     { id: 5, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892" },
     { id: 6, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891"},
     { id: 7, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892"},
+    { id: 6, cid: "10005006790", name: "Pema Zangmo", email: "pema@moul.gov.kt", contact: "17677891"},
+    { id: 7, cid: "10005006791", name: "Sonam Wangchuk", email: "sonam@moul.gov.kt", contact: "17677892"},
   ]);
 
   const [editExpertise, setEditExpertise] = useState(null);
@@ -54,9 +56,7 @@ const SuperAdminDashboard = () => {
 
       {/* Table Section */}
       <div className="table-container">
-        <h2 className="table-title">
-          <FaTable className="table-title-icon" /> Recent Expertise
-        </h2>
+      <h2 className="table-title">Recent Expertise</h2>
 
         <table className="table">
           <thead>

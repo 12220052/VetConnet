@@ -10,7 +10,8 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa"; // Import new icons
 import logo from "../../assets/logo.png"; // Import the logo
-import "../../astyles.css";
+import "../css/astyles.css";
+import "../css/style.css";
 
 const Sidebar = () => {
   const location = useLocation(); // Get the current route location
@@ -41,7 +42,7 @@ const Sidebar = () => {
       {/* Navigation Links */}
       <div style={{ flexGrow: 1 }}>
         <Link
-          to="/superdashboard"
+          to="/adminDashboard"
           className={`block py-2 px-3 rounded mb-2 flex items-center ${
             location.pathname === "/superdashboard"
               ? "bg-white text-[#011523]" // Active link styles
@@ -51,55 +52,37 @@ const Sidebar = () => {
           <FaHome className="mr-2" /> Dashboard
         </Link>
         <Link
-          to="/expertiseMngt"
+          to="/vetApplication"
           className={`block py-2 px-3 rounded mb-2 flex items-center ${
-            location.pathname === "/expertiseMngt"
+            location.pathname === "/vetApplication"
               ? "bg-white text-[#011523]" // Active link styles
               : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
           }`}
         >
-          <FaUserCog className="mr-2" /> Expertise Management
+          <FaClipboardList className="mr-2" /> Vet Application
         </Link>
         <Link
-          to="/contentmgnt"
-          className={`block py-2 px-3 rounded mb-2 flex items-center ${
-            location.pathname === "/contentmgnt"
+          to="/vetManage"
+          className={`block py-2 px-3 rounded mb-2  flex items-center ${
+            location.pathname === "/vetManage"
               ? "bg-white text-[#011523]" // Active link styles
               : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
           }`}
         >
-          <FaClipboardList className="mr-2" /> Content Management
+          <FaClipboardList className="mr-2" /> Manage Vet
         </Link>
         <Link
-          to="/webFeedback"
+          to="/report"
           className={`block py-2 px-3 rounded mb-2 flex items-center ${
-            location.pathname === "/webFeedback"
+            location.pathname === "/report"
               ? "bg-white text-[#011523]" // Active link styles
               : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
           }`}
         >
-          <FaComments className="mr-2" /> Website Feedback
+          <FaComments className="mr-2" /> Report
         </Link>
-        <Link
-          to="/refund-forms"
-          className={`block py-2 px-3 rounded mb-2 flex items-center ${
-            location.pathname === "/refund-forms"
-              ? "bg-white text-[#011523]" // Active link styles
-              : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
-          }`}
-        >
-          <FaFileInvoice className="mr-2" /> Refund Forms
-        </Link>
-        <Link
-          to="/payout"
-          className={`block py-2 px-3 rounded mb-2 flex items-center ${
-            location.pathname === "/payout"
-              ? "bg-white text-[#011523]" // Active link styles
-              : "bg-[#011523] hover:bg-[#022a3f]" // Default styles
-          }`}
-        >
-          <FaMoneyBillWave className="mr-2" /> Payout
-        </Link>
+       
+       
       </div>
 
       {/* Logout Button at the Bottom */}

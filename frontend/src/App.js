@@ -15,6 +15,7 @@ import SuperAdminDashboard from "./pages/Superadmin/SuperAdminDashboard";
 import ContentManagement from "./pages/Superadmin/ContentMgmt.jsx";
 import ExpertiseMngt from "./pages/Superadmin/ExpertiseMngt.jsx";
 import ExpertiseDashboard from "./pages/Expertise/ExpertiseDashboard";
+import WebFeedback from "./pages/Superadmin/WebFeedback.jsx";
 import VetApplication from "./pages/Expertise/VetApplication";
 import VetManage from "./pages/Expertise/ManageVet";
 import Report from "./pages/Expertise/Report";
@@ -36,7 +37,8 @@ const MainLayout = () => {
     location.pathname === "/" ||
     location.pathname.startsWith("/superdashboard") ||
     location.pathname.startsWith("/expertiseMngt") ||
-    location.pathname.startsWith("/contentmgnt");
+    location.pathname.startsWith("/contentmgnt") ||
+    location.pathname.startsWith("/webFeedback");
 
   // 🔹 Get the appropriate sidebar
   const getSidebar = () =>
@@ -58,7 +60,7 @@ const MainLayout = () => {
             <Route path="/" element={<SuperAdminDashboard />} />
             <Route path="/superdashboard" element={<SuperAdminDashboard />} />
             <Route path="/contentmgnt" element={<ContentManagement />} />
-            <Route path="/edashboard" element={<ExpertiseDashboard />} />
+            <Route path="/webFeedback" element={<WebFeedback />} />
             <Route path="/expertiseMngt" element={<ExpertiseMngt />} />
             <Route path="/vet-application" element={<VetApplication />} />
             <Route path="/vet-manage" element={<VetManage />} />

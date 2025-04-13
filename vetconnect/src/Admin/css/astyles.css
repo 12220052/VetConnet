@@ -1,0 +1,270 @@
+/* General Styles */
+.dashboard-container {
+  flex: 1;
+  padding: 18px;
+  width: 80vw;
+}
+
+.dashboard-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* Stats Section */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stats-card {
+  padding: 12px;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.stats-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.stats-number {
+  font-size: 1.125rem;
+}
+
+/* Table Styles */
+.table-container {
+  padding: 10px;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.table-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.table-title-icon {
+  margin-right: 8px;
+  color: #3b82f6;
+}
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem; /* Small font size */
+}
+
+.table th, 
+.table td {
+  border: 1px solid #d1d5db;
+  padding: 4px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #e5e7eb;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.action-btn {
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin: 0 4px;
+}
+
+.edit-btn {
+  color: #2563eb; /* Blue */
+}
+
+.delete-btn {
+  color: #dc2626; /* Red */
+}
+
+.save-btn {
+  color: #16a34a; /* Green */
+}
+
+/* Input Field in Table */
+.table-input {
+  border: 1px solid #d1d5db;
+  padding: 4px;
+  width: 100%;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: visible; /* Always visible */
+  opacity: 1; /* Always opaque */
+}
+
+/* Modal */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal input fields */
+.modal input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+/* Adjust the space between rows */
+.modal .modal-input-row {
+  margin-bottom: 12px; /* Adds space between rows */
+}
+
+/* Button styling */
+.update-btn,
+.cancel-btn {
+  background-color: #113047;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 80px;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #A52727;
+}
+
+.update-btn:hover,
+.cancel-btn:hover {
+  opacity: 0.8;
+}
+
+/* Add Expertise Button */
+.add-expertise-btn {
+  background-color: #FFFFFF; /* White background */
+  color: #113047; /* Text color */
+  padding: 10px 20px;
+  border: 2px solid #113047; /* Border color */
+  border-radius: 4px;
+  cursor: pointer;
+
+  /* Position it toward the right side of the screen */
+  position: absolute;
+  right: 20px; /* Adjust this value as needed */
+  top: 86px;
+}
+
+.add-expertise-btn:hover {
+  background-color: #f0f0f0; /* Light hover effect */
+}
+
+/* Search Bar */
+.search-bar input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  margin-left: 10px;
+}
+
+/* Confirmation Modal Styling */
+.confirmation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: visible; /* Always visible */
+  opacity: 1; /* Always opaque */
+}
+
+/* Confirmation Modal */
+.confirmation-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.confirmation-modal-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.confirmation-modal-message {
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+}
+
+.confirmation-modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirmation-modal-button {
+  background-color: #113047;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.confirmation-modal-button.cancel {
+  background-color: #A52727;
+}
+
+.confirmation-modal-button.confirm {
+  background-color: #16a34a;
+}
+
+.confirmation-modal-button:hover {
+  opacity: 0.8;
+}
+
+.delete-history-btn{
+  display: flex;
+  background-color: #6DC5EE;
+  color: #333333;
+  padding: 10px 20px;
+  border-radius: 10px;
+  justify-content:right;
+  margin-top: 30px;
+  margin-left: 110vh;
+
+}

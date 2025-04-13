@@ -1,0 +1,262 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Signup Container */
+  .otp-container {
+    display: flex;
+    width: 90%;
+    height: 95vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: rgb(70, 70, 70);
+    border-radius: 10px ;
+    border: #b3bfd2 1px solid;
+  }
+  
+  /* Vertical Line */
+  .vertical-line {
+    width: 1px; /* Thickness of the line */
+    height: 100%; /* Height of the line */
+    background-color: #b3bfd2; /* Color of the line */
+    margin: 0 100px; /* Spacing around the line */
+  }
+  
+  /* Left Side */
+  .left-side {
+    width: 27%;
+    text-align: center;
+    padding: 20px;
+    /* background: #f8f9fa; */
+  }
+  
+  .logo {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    border: #113047 .5px solid;
+    margin-bottom: 20px;
+  }
+  
+  .left-side h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-family: inria serif;
+    color: #333;
+  }
+  
+  .left-side p {
+    font-size: 1.1rem;
+    color: #a2a2a2;
+    font-style: italic;
+  }
+  
+  /* Right Side */
+  .right-side {
+    width: 45%;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    color: #333;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .signup-title {
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  /* Form */
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-bottom: 1px solid #636363;
+    padding-bottom: 5px;
+  }
+  
+  
+
+  
+  .error-message {
+    color: red;
+    font-size: 0.8rem;
+  text-align: left;
+    margin-top: 5px;
+  }
+  
+
+  /* Button */
+  .otp-btn {
+    background: #113047;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .signup-btn:hover {
+    background: #536075;
+  }
+  
+ 
+  
+  /* OTP Input Group */
+  .otp-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Space between OTP fields */
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+  
+  /* OTP Input Field */
+  .otp-input {
+    width: 95px; /* Fixed width for each OTP field */
+    height: 85px; /* Fixed height for each OTP field */
+    text-align: center;
+    font-size: 1.2rem;
+    border: 1px solid #3c586d;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .otp-message p{
+    right:500px;
+  }
+  .otp-input:focus {
+    border-color: #113047;
+  }
+  
+  .otp-input.error {
+    border-color: red;
+  }
+  .resend-otp{
+    text-decoration: none;
+    color: #92cff0;
+    font-style: italic;
+  }
+  
+/* Responsive Design */
+
+/* For screens larger than 1024px */
+@media (max-width: 1024px) {
+  .otp-container {
+    flex-direction: column;
+    height: auto;
+    padding: 30px;
+  }
+
+  .left-side,
+  .right-side {
+    width: 80%;
+    text-align: center;
+  }
+
+  .logo {
+    width: 250px;
+    height: 250px;
+  }
+
+  .vertical-line {
+    display: none; /* Remove vertical line for smaller screens */
+  }
+
+  .otp-input-group {
+    gap: 10px; /* Reduce the gap between OTP fields */
+  }
+}
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+  .otp-container {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+  }
+
+  .left-side,
+  .right-side {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .logo {
+    width: 220px;
+    height: 220px;
+  }
+
+  .otp-btn {
+    width: 100%;
+    font-size: 1rem;
+    height: 50px;
+  }
+
+  .otp-input {
+    width: 11vw; /* Increase width on smaller screens */
+    height: 7vh; /* Adjust height for better fit */
+  }
+}
+
+/* For screens smaller than 480px */
+@media (max-width: 480px) {
+  .left-side h2 {
+    font-size: 1.5rem;
+  }
+
+  .left-side p {
+    font-size: 1rem;
+  }
+
+  .logo {
+    width: 180px;
+    height: 180px;
+  }
+
+  .right-side {
+    padding: 15px;
+  }
+
+  .signup-btn {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .otp-input {
+    width: 25vw; /* Further increase width for very small screens */
+    height: 15vh; /* Adjust height for better fit */
+  }
+
+  .login-text {
+    font-size: 0.9rem;
+  }
+}

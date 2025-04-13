@@ -1,0 +1,112 @@
+/* Header.css */
+
+.header-container {
+    background-color: white;
+    padding: 1.1rem 0;
+    width: 100%;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .vetconnect-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #113047;
+    margin: 0;
+    padding-left: 4vh;
+    padding-top: 15px;
+    margin-top: -10px;
+  }
+  
+  .profile-section {
+    position: relative;
+    padding-right: 0;
+    padding-right:20px;
+    margin-bottom: 10px;
+
+  
+  }
+  
+  .profile-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .profile-icon {
+    width: 2rem;
+    height: 2rem;
+    color: #6b7280;
+    transition: all 0.2s ease;
+  }
+  
+  .profile-icon:hover {
+    color: #113047;
+  }
+  
+  .dropdown-arrow {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #6b7280;
+    transition: transform 0.2s ease;
+  }
+  
+  .dropdown-arrow.open {
+    transform: rotate(180deg);
+  }
+  
+  .header-divider {
+    height: 1px;
+    background-color:#113047 ;
+    width: 100%;
+    margin: 0.5rem 0;
+    margin-top: -15px;
+    margin-bottom: 30px;
+  }
+  
+
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    width: 12rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+  
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #374151;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #f3f4f6;
+    cursor: pointer;
+  }
+  
+  .dropdown-item:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f9fafb;
+  }

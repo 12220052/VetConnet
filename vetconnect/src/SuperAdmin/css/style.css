@@ -11,52 +11,6 @@ body {
   overflow: hidden; /* Prevent horizontal scrolling */
 }
 
-/* Sidebar Styles */
-.sidebar {
-  width: 223px;
-  background-color: #113047; /* Sidebar background color */
-  color: white;
-  border-radius: 10px;
-}
-
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  padding: 0.5rem 1rem;
-  margin: 0.25rem 0;
-  border-radius: 0.375rem; /* rounded */
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.sidebar a:hover {
-  background-color: #434040; /* Hover background color */
-}
-
-/* Active Link Styles */
-.sidebar a.active {
-  color: #0c0f10; /* Active link font color */
-  background-color: #FFFFFF;
-}
-
-/* Logout Button Styles */
-.sidebar button {
-  /* color: white; */
-  /* background: #e5e9f1; */
-  color: #113047;
-  border: none;
-  text-align: left;
-  width: 100%;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem; /* rounded */
-  transition: background-color 0.3s;
-  cursor: pointer;
-}
-
-.sidebar button:hover {
-  background-color: #e5e9f1;
-  color: #113047;
-}
 /* Main Content Styles */
 .main-content {
   flex: 1;
