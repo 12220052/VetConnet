@@ -28,7 +28,7 @@ router.post("/createContent", async (req, res) => {
   }
 });
 
-// READ (Get all content)
+// READ ALL
 router.get("/allContent", async (req, res) => {
   try {
     const posts = await Post.find();
@@ -46,7 +46,6 @@ router.put("/updatecontent/:id", async (req, res) => {
     const postId = req.params.id;
     const updateData = req.body;
 
-    // Remove empty fields
     Object.keys(updateData).forEach((key) => {
       if (updateData[key] === "" || updateData[key] === null) {
         delete updateData[key];
@@ -89,6 +88,35 @@ router.delete("/deletecontent/:id", async (req, res) => {
     res
       .status(500)
       .json({ error: "Error deleting post", details: error.message });
+  }
+});
+
+// GET FAQs
+router.get("/getbanner", async (req, res) => {
+  try {
+    const faqs = await Post.find({ contentType: "faq" });
+    res.status(200).json(faqs);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch FAQs", details: err.message });
+  }
+});
+router.post("/createfaq", async (req, res) => {
+  try {
+    const { Question, Answer } = req.body;
+
+    const newContent = new Content({
+      Question,
+      Answer,
+      contentType: "faq", // Optional default, you can change it
+    });
+
+    await newContent.save();
+    res.status(201).json(newContent);
+  } catch (err) {
+    console.error("Error creating content:", err);
+    res.status(500).json({ message: "Error creating content", error: err });
   }
 });
 

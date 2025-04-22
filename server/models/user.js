@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
+  chargePerHour: {
+    type: Number,
+    default: 0, // Default to 0 if not set. You can set this to another default rate if you prefer.
+    min: [0, "Rate must be a positive number"], // Ensures the rate is not negative.
+  },
 });
+
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 module.exports = User;

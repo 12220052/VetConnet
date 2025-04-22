@@ -17,6 +17,8 @@ const roleRoutes = require("./routes/roleRoutes");
 const contentRoutes = require("./routes/contentRoutes");
 const userActions = require("./routes/UserActions");
 const reviewRoutes = require("./routes/reviews");
+const appointmentRoutes = require("./routes/appointmentsRoutes.js");
+const refundRoutes = require("./routes/refundRoutes.js");
 
 // Middleware
 app.use(bodyParser.json());
@@ -37,6 +39,8 @@ app.use(roleRoutes);
 app.use(contentRoutes);
 app.use(userActions);
 app.use(reviewRoutes);
+app.use(appointmentRoutes);
+app.use(refundRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
